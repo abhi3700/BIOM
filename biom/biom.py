@@ -26,7 +26,8 @@ def biom_pie_plot(values, labels):
         values= values,
         labels= labels,
         name= "Section's Employees count",
-        hoverinfo= "label+value+percent+name",
+        textinfo= 'label+value'
+        # hoverinfo= "label+value+percent+name",
         # hole=0.2
         )
     data = [trace1]
@@ -47,16 +48,16 @@ def biom_pie_plot(values, labels):
     py.offline.plot(fig, filename= 'Section_Employees_count.html')
 
 
-#=================================================================MAIN FUNCTION======================================================================================
+#================================================================================MAIN FUNCTION========================================================================
 def main():
-    wb = xw.Book.caller()
+    # wb = xw.Book.caller()
     # wb.sheets[0].range("A1").value = "Hello xlwings!"
 
     #----------------------------------------------------------------------------------------------------------------------------------------------------------------    
     # Sheets
-    sht_biom = wb.sheets[sht_main]
-    sht_test = wb.sheets['test']
-    sht_run_code = wb.sheets['RUN_code']
+    # sht_biom = wb.sheets[sht_main]
+    # sht_test = wb.sheets['test']
+    # sht_run_code = wb.sheets['RUN_code']
 
     #----------------------------------------------------------------------------------------------------------------------------------------------------------------    
     # from 'Biometric' data
@@ -86,13 +87,19 @@ def main():
     df_biom['Section'] = df_biom_section_list
     
     #--------------------------------------------------------------------------------------------------------------------------------    
-    # display output to Excel sheet - 'Main'
-    sht_biom.clear()        # Cleaer the content and formatting before displaying the data
-    sht_biom.range('A1').options(index=False).value = df_biom         # show the dataframe values into sheet- 'RUN_code'
-    sht_biom.range('A1:Z1048576').autofit()     # autofit the entire excel sheet
+    # # display output to Excel sheet - 'Main'
+    # sht_biom.clear()        # Clear the content and formatting before displaying the data
+    # sht_biom.range('A1').options(index=False).value = df_biom         # show the dataframe values into sheet- 'RUN_code'
+    # sht_biom.range('A1:Z1048576').autofit()     # autofit the entire excel sheet
 
-    #--------------------------------------------------------------------------------------------------------------------------------    
-    df_biom_pie_plot = df_biom[['Emp Code', 'Section']].drop_duplicates()
+    #---------------------------------------------------Pie Chart-----------------------------------------------------------------    
+    '''
+    TODO:
+    + filter-out GH-VMFG
+    - 
+    '''
+    df_biom_pie_plot = df_biom[df_biom['Section'] != 'GH']      # filter-out 'GH' from dataframe
+    df_biom_pie_plot = df_biom_pie_plot[['Emp Code', 'Section']].drop_duplicates()
     df_biom_pie_plot_values = df_biom_pie_plot['Section'].value_counts()
     df_biom_pie_plot_labels = df_biom_pie_plot['Section'].value_counts().index
 
@@ -106,9 +113,12 @@ def main():
         labels= df_biom_pie_plot_labels
         )
 
-# -------------------------------------------------------MAIN function------------------------------------------------------------------------------------------------
-# if __name__ == '__main__':
-#     main()
+    #---------------------------------------------------Bubble Chart-----------------------------------------------------------------    
+
+
+# -------------------------------------------------------MAIN function------------------------------------------------------------
+if __name__ == '__main__':
+    main()
 
 
 #--------------------------------------------------------------------------------------------------------------------------------
