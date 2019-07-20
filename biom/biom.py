@@ -3,7 +3,7 @@ import pandas as pd     # for dataframe
 import numpy as np      # for NaN values
 import win32api         # for message box
 import plotly as py
-from plotly.graph_objs import Pie
+from plotly.graph_objs import Pie, Scatter
 
 
 
@@ -85,7 +85,8 @@ def main():
         else:
             win32api.MessageBox(wb.app.hand, "Employee name - {0} doesn't match".format(empcode), "Error in Employee records")
     df_biom['Section'] = df_biom_section_list
-    
+    df_biom = df_biom[df_biom['Status'] != 'AntipassBack Error']    # filter-out rows with 'AntipassBack' error in 'Status' column
+
     #--------------------------------------------------------------------------------------------------------------------------------    
     # # display output to Excel sheet - 'Main'
     # sht_biom.clear()        # Clear the content and formatting before displaying the data
@@ -96,13 +97,13 @@ def main():
     '''
     TODO:
     + filter-out GH-VMFG
-    - 
     '''
     df_biom_pie_plot = df_biom[df_biom['Section'] != 'GH']      # filter-out 'GH' from dataframe
     df_biom_pie_plot = df_biom_pie_plot[['Emp Code', 'Section']].drop_duplicates()
     df_biom_pie_plot_values = df_biom_pie_plot['Section'].value_counts()
     df_biom_pie_plot_labels = df_biom_pie_plot['Section'].value_counts().index
-
+    
+    # display output to Excel sheet - 'Main'
     # sht_test.clear()        # Clear the content and formatting before displaying the data
     # sht_test.range('A1').options(index=False).value = df_biom_pie_plot         # show the dataframe values into sheet- 'RUN_code'
     # sht_test.range('A1:Z1048576').autofit()     # autofit the entire excel sheet
@@ -114,7 +115,10 @@ def main():
         )
 
     #---------------------------------------------------Bubble Chart-----------------------------------------------------------------    
-
+    # df_biom_bubble_chart = df_biom['Section', '']
+    # trace0 = Scatter(
+    #     x= df_biom['Section'][]
+    #     )
 
 # -------------------------------------------------------MAIN function------------------------------------------------------------
 if __name__ == '__main__':
