@@ -4,7 +4,7 @@ __BIOM:__ Biometric In-Out Monitor
 ## Rules
 1. `Auto-logout`: If a person doesn't __punch-out__, it will either 
 	- [ ] __auto-logout__ within 2 mins, OR
-	- [ ] ignore the entry  
+	- [x] ignore the entry  
 
 	This will force employees to __punch-out__, otherwise they lose the total duration of stay inside Fab. 
 
@@ -47,6 +47,14 @@ __BIOM:__ Biometric In-Out Monitor
 |---------|----------|---------|--------|------|------|--------|
 | CL00075 |	ANURUDHA SHUKLA |	VFDQC	| M FAB - 1 |	26/06/2019 | 14:23:42 |	ACCESS GRANTED BIO |
 
+## Rules
+* 1: Accept this pattern
+```
+IN
+OUT
+IN
+OUT
+```
 
 ## References
 * Plotly dot plots - https://plot.ly/python/dot-plots/
